@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Activity, Brain, CheckCircle, AlertTriangle, Clock, RefreshCw } from 'lucide-react'
-import { getHealth, getModels, getReviews, type HealthResponse, type ModelInfo, type ReviewResponse } from '../api/client'
+import { getHealth, getModels, getReviews, formatDateTime, type HealthResponse, type ModelInfo, type ReviewResponse } from '../api/client'
 
 export default function OverviewPage() {
   const [health, setHealth] = useState<HealthResponse | null>(null)
@@ -182,7 +182,7 @@ export default function OverviewPage() {
                   <td style={{ padding: '0.5rem 0.75rem', color: 'var(--color-text-muted)' }}>{r.reviewer_id}</td>
                   <td style={{ padding: '0.5rem 0.75rem' }}>{r.note || '—'}</td>
                   <td style={{ padding: '0.5rem 0.75rem', color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>
-                    {new Date(r.created_at).toLocaleString()}
+                    {formatDateTime(r.created_at)}
                   </td>
                 </tr>
               ))}

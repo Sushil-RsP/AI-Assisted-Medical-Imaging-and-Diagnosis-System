@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
 from app.config import settings
-from app.database import StudyInference, AuditLog
+from app.database import StudyInference, AuditLog, utc_now
 from app.schemas import StudySummary, LabelPrediction
 from app.ml.classifier import get_classifier
 from app.ml.gradcam import get_gradcam
@@ -165,6 +165,7 @@ async def sync_new_studies_and_infer(db: AsyncSession) -> tuple[int, list[str]]:
             for p in clf_result.predictions
         ]
 
+        now = utc_now()
         study_inf = StudyInference(
             id=str(uuid.uuid4()),
             study_uid=s.study_uid,
@@ -178,7 +179,7 @@ async def sync_new_studies_and_infer(db: AsyncSession) -> tuple[int, list[str]]:
             overlay_base64=cam_result.overlay_base64,
             status="pending_review",
             model_version=clf_result.model_version,
-            created_at=datetime.datetime.utcnow(),
+            created_at=now,
         )
         db.add(study_inf)
 
@@ -188,7 +189,7 @@ async def sync_new_studies_and_infer(db: AsyncSession) -> tuple[int, list[str]]:
             entity_id=study_inf.id,
             reviewer_id="system-orthanc-worker",
             detail=f"study_uid={s.study_uid}; top_label={clf_result.top_label}; score={clf_result.top_score:.3f}",
-            created_at=datetime.datetime.utcnow(),
+            created_at=now,
         )
         db.add(audit_entry)
         processed_uids.append(s.study_uid)

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FileText, RefreshCw } from 'lucide-react'
-import { getAuditLog, type AuditLogEntry } from '../api/client'
+import { getAuditLog, formatDateTime, type AuditLogEntry } from '../api/client'
 
 export default function AuditLogPage() {
   const [entries, setEntries] = useState<AuditLogEntry[]>([])
@@ -62,7 +62,7 @@ export default function AuditLogPage() {
               {entries.map(e => (
                 <tr key={e.id} style={{ borderBottom: '1px solid var(--color-border)' }}>
                   <td style={{ padding: '0.65rem 0.75rem', color: 'var(--color-text-muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
-                    {new Date(e.created_at).toLocaleString()}
+                    {formatDateTime(e.created_at)}
                   </td>
                   <td style={{ padding: '0.65rem 0.75rem' }}>
                     <span className="badge badge-inference" style={{ fontSize: '0.75rem' }}>{e.event_type}</span>

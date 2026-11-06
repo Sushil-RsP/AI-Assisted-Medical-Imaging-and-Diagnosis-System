@@ -9,6 +9,9 @@ from app.config import settings
 engine = create_async_engine(settings.db_url, echo=settings.debug)
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
+def utc_now() -> datetime.datetime:
+    return datetime.datetime.now(datetime.timezone.utc)
+
 class Base(DeclarativeBase):
     pass
 
@@ -20,8 +23,8 @@ class Review(Base):
     status: Mapped[str] = mapped_column(String(16), nullable=False)  # approved | rejected | pending
     note: Mapped[str | None] = mapped_column(Text, nullable=True)
     reviewer_id: Mapped[str] = mapped_column(String(128), nullable=False)
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=datetime.datetime.utcnow)
-    updated_at: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
+    updated_at: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=utc_now, onupdate=utc_now)
 
 class AuditLog(Base):
     __tablename__ = "audit_logs"
@@ -30,7 +33,7 @@ class AuditLog(Base):
     entity_id: Mapped[str] = mapped_column(String(255), nullable=True)
     reviewer_id: Mapped[str] = mapped_column(String(128), nullable=False)
     detail: Mapped[str | None] = mapped_column(Text, nullable=True)
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=datetime.datetime.utcnow)
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 class StudyInference(Base):
     """Inference result generated from pulled Orthanc DICOM studies."""
@@ -47,7 +50,7 @@ class StudyInference(Base):
     overlay_base64: Mapped[str | None] = mapped_column(Text, nullable=True)
     status: Mapped[str] = mapped_column(String(32), default="pending_review")  # pending_review | approved | rejected
     model_version: Mapped[str] = mapped_column(String(64), default="densenet121-v0.1-demo")
-    created_at: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=datetime.datetime.utcnow)
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime(timezone=True), default=utc_now)
 
 async def get_db():
     async with AsyncSessionLocal() as session:

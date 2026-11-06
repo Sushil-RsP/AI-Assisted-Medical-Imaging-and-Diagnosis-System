@@ -4,6 +4,7 @@ import {
   getStudies,
   syncStudiesAndInfer,
   getStudyInferences,
+  formatDateTime,
   type StudySummary,
   type StudyInferenceResponse
 } from '../api/client'
@@ -132,7 +133,7 @@ export default function StudiesPage() {
                       </span>
                     </td>
                     <td style={{ padding: '0.65rem 0.75rem', color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>
-                      {new Date(inf.created_at).toLocaleString()}
+                      {formatDateTime(inf.created_at)}
                     </td>
                     <td style={{ padding: '0.65rem 0.75rem' }}>
                       {inf.overlay_base64 ? (

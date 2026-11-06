@@ -11,6 +11,36 @@ export const api = axios.create({
   timeout: 120_000,
 })
 
+// ── Timezone & Date Formatting Utilities ─────────────────────────────────────
+
+/**
+ * Format an ISO or UTC date-time string into the user's local timezone.
+ * Appends 'Z' if no timezone offset is present so that naive UTC strings
+ * are correctly converted to the user's local time (e.g. IST).
+ */
+export function formatDateTime(dateStr: string | null | undefined): string {
+  if (!dateStr) return '—'
+  const trimmed = dateStr.trim()
+  const hasTimezone = trimmed.endsWith('Z') || /[+-]\d{2}:?\d{2}$/.test(trimmed)
+  const isoStr = trimmed.includes('T') ? trimmed : trimmed.replace(' ', 'T')
+  const normalizedStr = hasTimezone ? isoStr : `${isoStr}Z`
+  const d = new Date(normalizedStr)
+  return isNaN(d.getTime()) ? dateStr : d.toLocaleString()
+}
+
+/**
+ * Format only the time portion into the user's local timezone.
+ */
+export function formatTime(dateStr: string | null | undefined): string {
+  if (!dateStr) return '—'
+  const trimmed = dateStr.trim()
+  const hasTimezone = trimmed.endsWith('Z') || /[+-]\d{2}:?\d{2}$/.test(trimmed)
+  const isoStr = trimmed.includes('T') ? trimmed : trimmed.replace(' ', 'T')
+  const normalizedStr = hasTimezone ? isoStr : `${isoStr}Z`
+  const d = new Date(normalizedStr)
+  return isNaN(d.getTime()) ? dateStr : d.toLocaleTimeString()
+}
+
 // ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface HealthResponse {

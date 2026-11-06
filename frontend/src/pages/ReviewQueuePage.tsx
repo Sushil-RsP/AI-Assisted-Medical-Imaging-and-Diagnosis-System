@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ClipboardList, CheckCircle, XCircle } from 'lucide-react'
-import { getReviews, createReview, type ReviewResponse } from '../api/client'
+import { getReviews, createReview, formatDateTime, type ReviewResponse } from '../api/client'
 
 export default function ReviewQueuePage() {
   const [reviews, setReviews] = useState<ReviewResponse[]>([])
@@ -157,7 +157,7 @@ export default function ReviewQueuePage() {
                   <div>
                     <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{r.study_id}</div>
                     <div style={{ fontSize: '0.78rem', color: 'var(--color-text-muted)' }}>
-                      Auditor: {r.reviewer_id} · {new Date(r.created_at).toLocaleString()}
+                      Auditor: {r.reviewer_id} · {formatDateTime(r.created_at)}
                     </div>
                   </div>
                   <span className={`badge badge-${r.status}`}>{r.status.toUpperCase()}</span>

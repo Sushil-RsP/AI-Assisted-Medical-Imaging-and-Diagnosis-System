@@ -6,6 +6,7 @@ import {
   classify,
   gradcam,
   createReview,
+  formatTime,
   type ClassificationResponse,
   type GradCAMResponse,
   type ReviewResponse
@@ -268,7 +269,7 @@ export default function NewScanPage() {
                       <span>Finding {savedReview.status.toUpperCase()}</span>
                     </div>
                     <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.35rem' }}>
-                      Recorded in immutable audit ledger by <code>{savedReview.reviewer_id}</code> at {new Date(savedReview.created_at).toLocaleTimeString()}
+                      Recorded in immutable audit ledger by <code>{savedReview.reviewer_id}</code> at {formatTime(savedReview.created_at)}
                     </div>
                     {savedReview.note && (
                       <div style={{ fontSize: '0.85rem', marginTop: '0.35rem', fontStyle: 'italic' }}>

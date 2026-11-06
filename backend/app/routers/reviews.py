@@ -6,7 +6,7 @@ import logging
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-from app.database import get_db, Review, AuditLog
+from app.database import get_db, Review, AuditLog, utc_now
 from app.config import settings
 from app.schemas import ReviewCreate, ReviewResponse, AuditLogEntry
 
@@ -20,6 +20,7 @@ async def create_review(
 ):
     if body.status in ("rejected",) and not body.note:
         raise HTTPException(422, "A note is required when rejecting a study.")
+    now = utc_now()
     review = Review(
         id=str(uuid.uuid4()),
         study_id=body.study_id,
@@ -27,8 +28,8 @@ async def create_review(
         status=body.status,
         note=body.note,
         reviewer_id=settings.reviewer_id,
-        created_at=datetime.datetime.utcnow(),
-        updated_at=datetime.datetime.utcnow(),
+        created_at=now,
+        updated_at=now,
     )
     db.add(review)
     log = AuditLog(
@@ -37,7 +38,7 @@ async def create_review(
         entity_id=review.id,
         reviewer_id=settings.reviewer_id,
         detail=f"status={body.status}",
-        created_at=datetime.datetime.utcnow(),
+        created_at=now,
     )
     db.add(log)
     await db.commit()
