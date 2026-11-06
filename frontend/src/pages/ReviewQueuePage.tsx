@@ -7,7 +7,6 @@ export default function ReviewQueuePage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Review submission state
   const [studyId, setStudyId] = useState('')
   const [modelVersion, setModelVersion] = useState('densenet121-v0.1-demo')
   const [status, setStatus] = useState<'approved' | 'rejected'>('approved')
@@ -68,7 +67,6 @@ export default function ReviewQueuePage() {
       </p>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
-        {/* Adjudication Submission Form */}
         <div className="card">
           <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '1rem' }}>Adjudicate AI Finding</h2>
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
@@ -137,7 +135,6 @@ export default function ReviewQueuePage() {
           </form>
         </div>
 
-        {/* Existing Reviews List */}
         <div>
           <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '0.85rem' }}>Historical Adjudications</h2>
           {loading && <div className="loading-overlay"><span className="spinner" /> Loading…</div>}

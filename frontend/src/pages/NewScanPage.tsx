@@ -25,7 +25,6 @@ export default function NewScanPage() {
   const [camResult, setCamResult] = useState<GradCAMResponse | null>(null)
   const [targetLabel, setTargetLabel] = useState<string>('')
 
-  // Inline Radiologist Review state
   const [decision, setDecision] = useState<'approved' | 'rejected'>('approved')
   const [reviewNote, setReviewNote] = useState<string>('')
   const [submittingReview, setSubmittingReview] = useState<boolean>(false)
@@ -156,7 +155,6 @@ export default function NewScanPage() {
         </div>
       ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.25rem' }}>
-          {/* Left Column: Image viewer and controls */}
           <div>
             <div className="card" style={{ marginBottom: '1rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
@@ -184,7 +182,6 @@ export default function NewScanPage() {
               </div>
             </div>
 
-            {/* Inference Actions */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
               <button
                 className="btn btn-primary"
@@ -231,7 +228,6 @@ export default function NewScanPage() {
             {error && <div className="error-box" style={{ marginTop: '0.75rem' }}>{error}</div>}
           </div>
 
-          {/* Right Column: AI Predictions, Grad-CAM & Radiologist Adjudication */}
           <div>
             {classResult ? (
               <PredictionPanel result={classResult} />
@@ -249,7 +245,6 @@ export default function NewScanPage() {
               </div>
             )}
 
-            {/* Step 6 Radiologist Adjudication Card */}
             {classResult && (
               <div className="card" style={{ marginTop: '1.25rem', border: '1px solid var(--color-border)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>

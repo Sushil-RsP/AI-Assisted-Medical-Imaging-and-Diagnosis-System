@@ -24,7 +24,6 @@ async def segment(file: UploadFile = File(...)):
             "Only NIfTI (.nii or .nii.gz) volumes are accepted by the segmentation endpoint. "
             "For chest X-ray classification use /api/v1/classify instead."
         )
-    # In demo mode we don't need to read the file
     pipeline = get_segmentation_pipeline()
     try:
         result = pipeline.segment_volume(file.filename or "uploaded.nii.gz")

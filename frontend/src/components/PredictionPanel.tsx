@@ -21,7 +21,6 @@ export default function PredictionPanel({ result }: Props) {
         </div>
       </div>
 
-      {/* Top prediction highlight */}
       <div style={{
         background: 'var(--color-surface-alt)',
         borderRadius: 'var(--radius)',
@@ -38,7 +37,6 @@ export default function PredictionPanel({ result }: Props) {
         </div>
       </div>
 
-      {/* Horizontal Bar Chart for Top 10 Predictions */}
       <div style={{ height: 260 }}>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={top10} layout="vertical" margin={{ left: 10, right: 30, top: 4, bottom: 4 }}>
@@ -83,7 +81,6 @@ export default function PredictionPanel({ result }: Props) {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.75rem', flexWrap: 'wrap', gap: '0.4rem' }}>
         <span>Model: {result.model_version}</span>
-        <span style={{ fontStyle: 'italic' }}>{result.disclaimer || 'For education only — not for clinical use.'}</span>
       </div>
     </div>
   )

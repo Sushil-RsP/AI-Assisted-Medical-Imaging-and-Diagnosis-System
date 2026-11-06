@@ -59,7 +59,6 @@ export default function OverviewPage() {
         </div>
       )}
 
-      {/* KPI Cards Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
         <div className="card">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
@@ -107,7 +106,6 @@ export default function OverviewPage() {
         </div>
       </div>
 
-      {/* Model Registry Cards */}
       <h2 style={{ fontSize: '1.15rem', fontWeight: 600, marginBottom: '0.75rem' }}>Model Registry Status</h2>
       <div style={{ display: 'grid', gap: '0.75rem', marginBottom: '1.5rem' }}>
         {models.map(m => (
@@ -152,7 +150,6 @@ export default function OverviewPage() {
         </div>
       </div>
 
-      {/* Recent Reviews Table */}
       <h2 style={{ fontSize: '1.15rem', fontWeight: 600, marginBottom: '0.75rem' }}>Recent Radiologist Reviews</h2>
       {reviews.length === 0 ? (
         <div className="empty-state card">

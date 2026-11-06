@@ -1,7 +1,3 @@
-/**
- * API client for the MedImaging backend.
- * All responses include a disclaimer that this is for education only.
- */
 import axios from 'axios'
 
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
@@ -11,13 +7,6 @@ export const api = axios.create({
   timeout: 120_000,
 })
 
-// ── Timezone & Date Formatting Utilities ─────────────────────────────────────
-
-/**
- * Format an ISO or UTC date-time string into the user's local timezone.
- * Appends 'Z' if no timezone offset is present so that naive UTC strings
- * are correctly converted to the user's local time (e.g. IST).
- */
 export function formatDateTime(dateStr: string | null | undefined): string {
   if (!dateStr) return '—'
   const trimmed = dateStr.trim()
@@ -28,9 +17,6 @@ export function formatDateTime(dateStr: string | null | undefined): string {
   return isNaN(d.getTime()) ? dateStr : d.toLocaleString()
 }
 
-/**
- * Format only the time portion into the user's local timezone.
- */
 export function formatTime(dateStr: string | null | undefined): string {
   if (!dateStr) return '—'
   const trimmed = dateStr.trim()
@@ -40,8 +26,6 @@ export function formatTime(dateStr: string | null | undefined): string {
   const d = new Date(normalizedStr)
   return isNaN(d.getTime()) ? dateStr : d.toLocaleTimeString()
 }
-
-// ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface HealthResponse {
   status: string
@@ -158,8 +142,6 @@ export interface AuditLogEntry {
   detail: string | null
   created_at: string
 }
-
-// ── API Functions ─────────────────────────────────────────────────────────────
 
 export async function getHealth(): Promise<HealthResponse> {
   const res = await api.get<HealthResponse>('/health')

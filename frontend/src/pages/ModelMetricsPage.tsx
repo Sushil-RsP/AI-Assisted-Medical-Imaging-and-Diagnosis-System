@@ -101,7 +101,6 @@ export default function ModelMetricsPage() {
         </div>
       ))}
 
-      {/* Model Bias & Ethics Card */}
       <div className="card" style={{ marginTop: '1rem', borderLeft: '4px solid var(--color-primary)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
           <ShieldCheck size={18} color="var(--color-primary)" />

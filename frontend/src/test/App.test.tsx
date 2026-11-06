@@ -2,13 +2,12 @@ import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import App from '../App'
 
-// Mock api client to verify rendering without network dependency
 vi.mock('../api/client', () => ({
   getHealth: vi.fn().mockResolvedValue({
     status: 'ok',
     version: '0.1.0',
     environment: 'test',
-    disclaimer: 'For education only — not for clinical use.'
+    disclaimer: ''
   }),
   getModels: vi.fn().mockResolvedValue([]),
   getReviews: vi.fn().mockResolvedValue([]),
@@ -21,10 +20,10 @@ vi.mock('../api/client', () => ({
 }))
 
 describe('Medical Imaging Application Shell', () => {
-  it('renders mandatory education disclaimer banner', async () => {
+  it('renders application branding and header', async () => {
     render(<App />)
-    const disclaimer = await screen.findByText(/For education only — not for clinical use/i)
-    expect(disclaimer).toBeInTheDocument()
+    const brand = await screen.findByText(/MedImaging/i)
+    expect(brand).toBeInTheDocument()
   })
 
   it('renders standard navigation routing items', async () => {

@@ -22,7 +22,7 @@ const mockPredictionData: ClassificationResponse = {
   top_label: 'No Finding',
   top_score: 0.65,
   inference_time_ms: 38.5,
-  disclaimer: 'For education only — not for clinical use.',
+  disclaimer: '',
   warning: '⚠️ DEMO MODE: Checkpoint not loaded',
 }
 
@@ -40,9 +40,9 @@ describe('PredictionPanel Component', () => {
     expect(screen.getByText(/DEMO MODE: Checkpoint not loaded/i)).toBeInTheDocument()
   })
 
-  it('displays educational disclaimer and latency metric', () => {
+  it('displays latency metric and model version', () => {
     render(<PredictionPanel result={mockPredictionData} />)
     expect(screen.getByText(/39 ms/i)).toBeInTheDocument()
-    expect(screen.getByText(/For education only — not for clinical use/i)).toBeInTheDocument()
+    expect(screen.getByText(/densenet121-v0.1-demo/i)).toBeInTheDocument()
   })
 })

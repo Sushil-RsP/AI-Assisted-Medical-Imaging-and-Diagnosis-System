@@ -31,7 +31,6 @@ export default function SettingsPage() {
         Configuration overview for backend inference pipelines, persistence, and external PACS connectivity.
       </p>
 
-      {/* Database Reset Action */}
       <div className="card" style={{ marginBottom: '1.25rem', border: '1px solid rgba(239, 68, 68, 0.25)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
           <div>
@@ -78,7 +77,6 @@ export default function SettingsPage() {
         {error && <div className="error-box" style={{ marginTop: '0.75rem', fontSize: '0.85rem' }}>{error}</div>}
       </div>
 
-      {/* Backend Variables Reference */}
       <div className="card" style={{ marginBottom: '1.25rem' }}>
         <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.85rem' }}>
           <Info size={17} color="var(--color-primary)" />
@@ -115,7 +113,6 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Security & Deployment Principles */}
       <div className="card" style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', borderLeft: '4px solid var(--color-warning)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', color: 'var(--color-text)' }}>
           <Shield size={17} color="var(--color-warning)" />
@@ -126,7 +123,6 @@ export default function SettingsPage() {
           <li><strong>Production Credentials:</strong> Change default Orthanc credentials (<code>changeme_in_production</code>) prior to container network deployment.</li>
           <li><strong>Safe Deserialization:</strong> PyTorch checkpoints are parsed using safe <code>weights_only=True</code> parameters.</li>
           <li><strong>PHI Scrubbing:</strong> In accordance with HIPAA Safe Harbor, incoming studies are de-identified before processing.</li>
-          <li><strong>No Clinical Diagnostic Clearance:</strong> This educational demonstrator is not validated as medical software under FDA 510(k) or EU MDR.</li>
         </ul>
       </div>
     </div>

@@ -7,31 +7,28 @@ from pydantic import BaseModel, Field, field_validator
 class BaseSchema(BaseModel):
     model_config = {"protected_namespaces": ()}
 
-# ── Health ────────────────────────────────────────────────────────────────────
 class HealthResponse(BaseSchema):
     status: str = "ok"
     version: str
     environment: str
     disclaimer: str = "For education only — not for clinical use."
 
-# ── Models ───────────────────────────────────────────────────────────────────
 class ModelInfo(BaseSchema):
     model_id: str
     architecture: str
     task: str
     labels: list[str]
     checkpoint_loaded: bool
-    mode: str  # "demo" | "inference"
+    mode: str
     disclaimer: str = "For education only — not for clinical use."
 
-# ── Classification ────────────────────────────────────────────────────────────
 class LabelPrediction(BaseSchema):
     label: str
     score: float = Field(ge=0.0, le=1.0)
 
 class ClassificationResponse(BaseSchema):
     request_id: str
-    mode: str  # "demo" | "inference"
+    mode: str
     model_version: str
     predictions: list[LabelPrediction]
     top_label: str
@@ -40,12 +37,11 @@ class ClassificationResponse(BaseSchema):
     disclaimer: str = "For education only — not for clinical use."
     warning: str | None = None
 
-# ── GradCAM ──────────────────────────────────────────────────────────────────
 class GradCAMResponse(BaseSchema):
     request_id: str
     mode: str
     model_version: str
-    heatmap_base64: str  # PNG encoded as base64
+    heatmap_base64: str
     overlay_base64: str
     target_label: str
     inference_time_ms: float
@@ -56,18 +52,16 @@ class GradCAMResponse(BaseSchema):
         "be used for diagnosis."
     )
 
-# ── Segmentation ─────────────────────────────────────────────────────────────
 class SegmentationResponse(BaseSchema):
     request_id: str
     mode: str
     model_version: str
-    mask_slice_base64: str  # middle axial slice of mask, PNG base64
+    mask_slice_base64: str
     num_slices: int
     dice_score: float | None = None
     inference_time_ms: float
     disclaimer: str = "For education only — not for clinical use."
 
-# ── DICOM / Studies ──────────────────────────────────────────────────────────
 class StudySummary(BaseSchema):
     study_uid: str
     patient_id: str
@@ -75,9 +69,8 @@ class StudySummary(BaseSchema):
     modality: str | None
     description: str | None
     num_series: int
-    source: str  # "orthanc" | "mock"
+    source: str
 
-# ── Study Inferences ──────────────────────────────────────────────────────────
 class StudyInferenceResponse(BaseSchema):
     id: str
     study_uid: str
@@ -100,11 +93,10 @@ class SyncStudiesResponse(BaseSchema):
     study_uids: list[str]
     message: str
 
-# ── Reviews ──────────────────────────────────────────────────────────────────
 class ReviewCreate(BaseSchema):
     study_id: str
     model_version: str
-    status: str  # "approved" | "rejected"
+    status: str
     note: str | None = None
 
     @field_validator("status")
@@ -126,7 +118,6 @@ class ReviewResponse(BaseSchema):
 
     model_config = {"from_attributes": True, "protected_namespaces": ()}
 
-# ── Audit ─────────────────────────────────────────────────────────────────────
 class AuditLogEntry(BaseSchema):
     id: str
     event_type: str

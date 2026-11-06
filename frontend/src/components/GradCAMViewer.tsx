@@ -25,7 +25,6 @@ export default function GradCAMViewer({ result, originalSrc }: Props) {
         </span>
       </div>
 
-      {/* View Mode Toggle */}
       <div style={{ display: 'flex', gap: '0.4rem', marginBottom: '0.75rem' }}>
         {(['overlay', 'heatmap', 'original'] as const).map(v => (
           <button
@@ -40,7 +39,6 @@ export default function GradCAMViewer({ result, originalSrc }: Props) {
         ))}
       </div>
 
-      {/* Main Image Display */}
       <div style={{ position: 'relative', borderRadius: 'var(--radius)', overflow: 'hidden', background: '#000', textAlign: 'center' }}>
         {view === 'overlay' ? (
           <div style={{ position: 'relative', width: '100%', height: 'auto' }}>
@@ -73,7 +71,6 @@ export default function GradCAMViewer({ result, originalSrc }: Props) {
         )}
       </div>
 
-      {/* Opacity Slider for Overlay Mode */}
       {view === 'overlay' && (
         <div style={{ marginTop: '0.75rem' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', marginBottom: '0.25rem' }}>

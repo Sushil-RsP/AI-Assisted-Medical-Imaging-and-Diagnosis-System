@@ -17,7 +17,6 @@ export default function App() {
           <Route index element={<Navigate to="/overview" replace />} />
           <Route path="overview"      element={<OverviewPage />} />
           <Route path="scan"          element={<NewScanPage />} />
-          {/* Legacy redirects */}
           <Route path="new-scan"      element={<Navigate to="/scan" replace />} />
           <Route path="ai-analysis"   element={<Navigate to="/scan" replace />} />
           <Route path="studies"       element={<StudiesPage />} />

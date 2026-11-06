@@ -95,7 +95,6 @@ export default function StudiesPage() {
 
       {error && <div className="error-box" style={{ marginBottom: '1rem' }}>{error}</div>}
 
-      {/* Section 1: Automated Study Inferences Ledger */}
       <div className="card" style={{ marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -156,7 +155,6 @@ export default function StudiesPage() {
         )}
       </div>
 
-      {/* Modal for viewing Grad-CAM overlay of inferred study */}
       {selectedOverlay && (
         <div style={{
           position: 'fixed',
@@ -184,13 +182,12 @@ export default function StudiesPage() {
               Study UID: <code>{selectedOverlay.study_uid}</code>
             </div>
             <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', fontStyle: 'italic' }}>
-              ⚠️ For education only — not for clinical use. Heatmap indicates convolutional activation focus.
+              Heatmap indicates convolutional activation focus.
             </div>
           </div>
         </div>
       )}
 
-      {/* Section 2: Orthanc PACS Studies List */}
       <h2 style={{ fontSize: '1.05rem', fontWeight: 600, marginBottom: '0.75rem' }}>Orthanc PACS Studies Feed</h2>
       {loading ? (
         <div className="loading-overlay"><span className="spinner" /> Querying DICOM repository…</div>

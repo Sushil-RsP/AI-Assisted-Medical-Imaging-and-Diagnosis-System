@@ -20,33 +20,7 @@ const NAV_ITEMS = [
 export default function Layout() {
   return (
     <div className={styles.root}>
-      {/* Mandatory Regulatory / Educational Notice Banner */}
-      <header
-        style={{
-          background: 'rgba(239, 68, 68, 0.12)',
-          borderBottom: '1px solid rgba(239, 68, 68, 0.3)',
-          padding: '0.4rem 1rem',
-          fontSize: '0.82rem',
-          color: '#fca5a5',
-          textAlign: 'center',
-          fontWeight: 500,
-          position: 'sticky',
-          top: 0,
-          zIndex: 50,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '0.5rem'
-        }}
-      >
-        <span>⚠️</span>
-        <span>
-          <strong>For education only — not for clinical use.</strong> Not approved for medical diagnosis or clinical decision-making.
-        </span>
-      </header>
-
       <div className={styles.shell}>
-        {/* Sidebar */}
         <nav className={styles.sidebar} aria-label="Main navigation">
           <div className={styles.logo}>
             <Brain size={22} color="#38bdf8" />
@@ -72,7 +46,6 @@ export default function Layout() {
           </div>
         </nav>
 
-        {/* Main content */}
         <main className={styles.main} id="main-content">
           <Outlet />
         </main>
