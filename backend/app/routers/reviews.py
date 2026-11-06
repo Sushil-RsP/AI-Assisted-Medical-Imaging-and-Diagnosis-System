@@ -5,8 +5,8 @@ import uuid
 import logging
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
-from app.database import get_db, Review, AuditLog, utc_now
+from sqlalchemy import select, delete
+from app.database import get_db, Review, AuditLog, StudyInference, utc_now
 from app.config import settings
 from app.schemas import ReviewCreate, ReviewResponse, AuditLogEntry
 
@@ -56,3 +56,13 @@ async def list_reviews(db: AsyncSession = Depends(get_db)):
 async def list_audit(db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(AuditLog).order_by(AuditLog.created_at.desc()))
     return result.scalars().all()
+
+
+@router.post("/reset", status_code=200)
+async def reset_database(db: AsyncSession = Depends(get_db)):
+    """Clear all reviews, audit logs, and study inferences to start fresh."""
+    await db.execute(delete(Review))
+    await db.execute(delete(AuditLog))
+    await db.execute(delete(StudyInference))
+    await db.commit()
+    return {"message": "All database records (reviews, audit logs, and inferences) cleared successfully."}

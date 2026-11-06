@@ -233,3 +233,9 @@ export async function getAuditLog(): Promise<AuditLogEntry[]> {
   const res = await api.get<AuditLogEntry[]>('/api/v1/audit')
   return res.data
 }
+
+export async function resetDatabase(): Promise<{ message: string }> {
+  const res = await api.post<{ message: string }>('/api/v1/reset')
+  return res.data
+}
+

@@ -1,13 +1,82 @@
-import React from 'react'
-import { Settings, Info, Shield, Database, Cpu } from 'lucide-react'
+import React, { useState } from 'react'
+import { Info, Shield, Trash2, CheckCircle } from 'lucide-react'
+import { resetDatabase } from '../api/client'
 
 export default function SettingsPage() {
+  const [clearing, setClearing] = useState(false)
+  const [message, setMessage] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleReset = async () => {
+    if (!window.confirm('Are you sure you want to delete all historical reviews, audit log entries, and auto-inferred studies? This resets the application to an initial clean state.')) {
+      return
+    }
+    setClearing(true)
+    setMessage(null)
+    setError(null)
+    try {
+      const res = await resetDatabase()
+      setMessage(res.message || 'Database cleared successfully. Ready for fresh test runs!')
+    } catch (e: any) {
+      setError(e.response?.data?.detail || e.message || 'Failed to clear database.')
+    } finally {
+      setClearing(false)
+    }
+  }
+
   return (
     <div>
       <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.25rem' }}>System & Environment Settings</h1>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem', marginBottom: '1.5rem' }}>
         Configuration overview for backend inference pipelines, persistence, and external PACS connectivity.
       </p>
+
+      {/* Database Reset Action */}
+      <div className="card" style={{ marginBottom: '1.25rem', border: '1px solid rgba(239, 68, 68, 0.25)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <div>
+            <div style={{ fontWeight: 600, fontSize: '1rem', color: '#fca5a5', marginBottom: '0.25rem' }}>
+              Database Clean Start / Reset
+            </div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
+              Wipe all review records, audit entries, and cached inferences to start fresh demonstrations from scratch.
+            </div>
+          </div>
+          <button
+            className="btn btn-ghost"
+            onClick={handleReset}
+            disabled={clearing}
+            style={{
+              color: '#f87171',
+              borderColor: 'rgba(239, 68, 68, 0.4)',
+              fontSize: '0.85rem'
+            }}
+          >
+            <Trash2 size={15} />
+            {clearing ? 'Resetting Database…' : 'Reset All Database Records'}
+          </button>
+        </div>
+
+        {message && (
+          <div style={{
+            marginTop: '0.75rem',
+            padding: '0.6rem 0.85rem',
+            borderRadius: 'var(--radius)',
+            background: 'rgba(34, 197, 94, 0.1)',
+            border: '1px solid rgba(34, 197, 94, 0.3)',
+            color: '#4ade80',
+            fontSize: '0.85rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem'
+          }}>
+            <CheckCircle size={16} />
+            <span>{message}</span>
+          </div>
+        )}
+
+        {error && <div className="error-box" style={{ marginTop: '0.75rem', fontSize: '0.85rem' }}>{error}</div>}
+      </div>
 
       {/* Backend Variables Reference */}
       <div className="card" style={{ marginBottom: '1.25rem' }}>
@@ -63,4 +132,3 @@ export default function SettingsPage() {
     </div>
   )
 }
-
